@@ -36,7 +36,7 @@ const Signin = () => {
     } catch (error) {
       console.log("Error adding user", error.message);
     }
-    navigate('/');
+    navigate('/all');
     
   }
 

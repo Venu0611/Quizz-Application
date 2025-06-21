@@ -10,9 +10,10 @@ const Navbar=()=>{
     return(
         <AppBar position="static">
           <Toolbar>
+            <Tabs to="/">Home</Tabs> 
             <Tabs to="/signin">Sign-in</Tabs> 
             <Tabs to="/resulting">Result </Tabs>
-            <Tabs to="/">Alluser</Tabs>
+            <Tabs to="/all">Alluser</Tabs>
             <Tabs to="/playquiz">Play-Quiz</Tabs>
           </Toolbar>
 
