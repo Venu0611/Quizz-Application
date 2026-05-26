@@ -1,18 +1,16 @@
 package com.crudapplication.crud.controller;
 
 import com.crudapplication.crud.dto.CustomerDTO;
-import com.crudapplication.crud.dto.LoginRequest;
 import com.crudapplication.crud.entity.Customer;
 import com.crudapplication.crud.services.CustomerServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "https://quizz-application-gold.vercel.app/register", allowCredentials = "true")
 public class MainController {
 
     @Autowired
@@ -26,15 +24,6 @@ public class MainController {
     @PostMapping("customer")
     public ResponseEntity<Customer> createCustomer(@RequestBody CustomerDTO customerDTO) {
         Customer customer = customerServices.createCustomer(customerDTO);
-        return ResponseEntity.ok(customer);
-    }
-
-    @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        Customer customer = customerServices.loginCustomer(loginRequest.getUsername(), loginRequest.getPassword());
-        if (customer == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        }
         return ResponseEntity.ok(customer);
     }
 
