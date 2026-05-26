@@ -1,6 +1,7 @@
 package com.crudapplication.crud.controller;
 
 import com.crudapplication.crud.dto.CustomerDTO;
+import com.crudapplication.crud.dto.LoginRequest; // Added dedicated login request DTO
 import com.crudapplication.crud.services.CustomerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,42 +11,42 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "https://quizz-application-gold.vercel.app/register", allowCredentials = "true")
+@CrossOrigin(origins = "https://quizz-application-gold.vercel.app", allowCredentials = "true")
 public class MainController {
 
     @Autowired
     private CustomerServices customerServices;
 
-    @GetMapping("customers")
+    @GetMapping("/customers") // Added leading slash
     public List<CustomerDTO> getAllCustomers() {
         return customerServices.getAllCustomers();
     }
 
-    @PostMapping("customer")
+    @PostMapping("/customer") // Added leading slash
     public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
-    	CustomerDTO customer = customerServices.createCustomer(customerDTO);
+        CustomerDTO customer = customerServices.createCustomer(customerDTO);
         return ResponseEntity.ok(customer);
     }
 
-    @GetMapping("customer/{id}")
+    @GetMapping("/customer/{id}") // Added leading slash
     public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id) {
         return ResponseEntity.ok(customerServices.getCustomerById(id));
     }
 
-    @PutMapping("customer/{id}")
+    @PutMapping("/customer/{id}") // Added leading slash
     public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
-    	CustomerDTO updatedCustomer = customerServices.updateCustomer(id, customerDTO);
+        CustomerDTO updatedCustomer = customerServices.updateCustomer(id, customerDTO);
         return ResponseEntity.ok(updatedCustomer);
     }
 
-    @DeleteMapping("customer/{id}")
+    @DeleteMapping("/customer/{id}") // Added leading slash
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         customerServices.deleteCustomer(id);
         return ResponseEntity.noContent().build();
     }
     
-    @PostMapping("login")
-    public ResponseEntity<?> loginCustomer(@RequestBody CustomerDTO loginRequest) {
+    @PostMapping("/login") // Added leading slash and switched to LoginRequest
+    public ResponseEntity<?> loginCustomer(@RequestBody LoginRequest loginRequest) {
         CustomerDTO authenticatedCustomer = customerServices.loginCustomer(
             loginRequest.getEmail(), 
             loginRequest.getPassword()
