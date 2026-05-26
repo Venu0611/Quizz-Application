@@ -1,4 +1,4 @@
-package com.crudapplication.crud.services;
+package com.backend.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.crudapplication.crud.dto.CustomerDTO;
-import com.crudapplication.crud.repo.CustomerRepo;
+import com.backend.dto.CustomerDTO;
+import com.backend.repo.CustomerRepo;
 
 @Service
 public class CustomerServices {

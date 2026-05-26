@@ -8,8 +8,10 @@
 		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.crudapplication</groupId>
-	<artifactId>crud</artifactId>
+	<!--<groupId>com.crudapplication</groupId>
+	<artifactId>crud</artifactId-->
+	<groupId>com.backend</groupId>
+    <artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>crud</name>
 	<description>Demo project for Spring Boot</description>

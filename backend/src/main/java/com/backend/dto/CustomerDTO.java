@@ -1,4 +1,4 @@
-package com.crudapplication.crud.dto;
+package com.backend.dto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
