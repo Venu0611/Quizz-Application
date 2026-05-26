@@ -22,10 +22,10 @@ const PlayQuiz = () => {
     setSelectedOption(e.target.value);
     switch (e.target.value) {
       case '1':
-        navigate("/signin");
+        navigate("/login");
         break;
       case '2':
-        navigate("/playing");
+        navigate("/login");
         break;
       case '3':
         navigate("/");

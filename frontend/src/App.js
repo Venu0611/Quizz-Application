@@ -5,6 +5,7 @@ import PlayQuiz from "./components/Play-Quiz";
 import Alluser from "./components/Alluser";
 import Resulted from "./components/Result";
 import Signin from "./components/Sign-in";
+import Login from "./components/Login";
 import Play from "./components/play";
 import Home from "./components/Home";
 
@@ -13,9 +14,11 @@ const App = () =>{
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/"element={<Home />}   />
+        <Route path="/" element={<Home />} />
         <Route path="/all" element={<Alluser />} />
+        <Route path="/register" element={<Signin />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/resulting" element={<Resulted />} />
         <Route path="/playquiz" element={<PlayQuiz />} />
         <Route path="/playing" element={<Play />} />

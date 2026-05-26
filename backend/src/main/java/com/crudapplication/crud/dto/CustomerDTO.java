@@ -5,6 +5,7 @@ public class CustomerDTO {
 	private String name;
 	private String email;
 	private int phonenumber;
+	private String password;
 	public String getName() {
 		return name;
 	}
@@ -22,6 +23,14 @@ public class CustomerDTO {
 	}
 	public void setPhonenumber(int phonenumber) {
 		this.phonenumber = phonenumber;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }

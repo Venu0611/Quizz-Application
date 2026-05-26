@@ -1,70 +1,198 @@
-import { FormControl, FormGroup, Input, InputLabel, Typography, styled, Button } from "@mui/material";
+import {
+  FormControl,
+  FormGroup,
+  Input,
+  InputLabel,
+  Typography,
+  styled,
+  Button,
+  Alert
+} from "@mui/material";
+
 import { useState } from "react";
 import { addUser } from "./services/Api";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled(FormGroup)`
   width: 50%;
-  text-align:center;
-  margin: 5% 0 0 25%;
+  max-width: 480px;
+  text-align: center;
+  margin: 4% auto;
+  padding: 24px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  background: #fff;
+
   & > div {
     margin-top: 20px;
   }
-  
 `;
 
 const initialValue = {
-  username: '',
-  password: '',
-  email: '',
-  phone: ''
-}
+  name: "",
+  email: "",
+  password: "",
+  mobile: ""
+};
 
 const Signin = () => {
   const [user, setUser] = useState(initialValue);
-  const navigate=useNavigate();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const navigate = useNavigate();
 
   const onValueChange = (e) => {
-    setUser({...user, [e.target.name]: e.target.value})
-    console.log(user); 
-  }
+    const { name, value } = e.target;
 
-  const addUserdetails = async()=>{
+    setUser({
+      ...user,
+      [name]: value
+    });
+  };
+
+  const addUserdetails = async () => {
+    setError("");
+    setSuccess("");
+
+    if (
+      !user.name ||
+      !user.email ||
+      !user.password ||
+      !user.mobile
+    ) {
+      setError("Please fill all fields.");
+      return;
+    }
+
     try {
       await addUser(user);
-      console.log("User added successfully");
-    } catch (error) {
-      console.log("Error adding user", error.message);
+
+      setSuccess("Registration successful!");
+
+      setUser(initialValue);
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
+
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+        "Unable to register user."
+      );
     }
-    navigate('/all');
-    
-  }
+  };
 
   return (
     <Container>
-      <Typography variant="h4" >Register Form</Typography>
+
+      <Typography variant="h4">
+        Register
+      </Typography>
+
+      <Typography
+        variant="subtitle1"
+        color="textSecondary"
+      >
+        Create your account
+      </Typography>
+
+      {error && (
+        <Alert severity="error">
+          {error}
+        </Alert>
+      )}
+
+      {success && (
+        <Alert severity="success">
+          {success}
+        </Alert>
+      )}
+
+      {/* Name */}
+
       <FormControl>
-        <InputLabel>Enter username</InputLabel>
-        <Input onChange={(e)=>onValueChange(e)} name='name' />
+        <InputLabel htmlFor="name">
+          Name
+        </InputLabel>
+
+        <Input
+          id="name"
+          name="name"
+          value={user.name}
+          onChange={onValueChange}
+          placeholder="Enter your name"
+        />
       </FormControl>
+
+      {/* Email */}
+
       <FormControl>
-        <InputLabel>Enter Password</InputLabel>
-        <Input onChange={(e)=>onValueChange(e)} name='password'  />
+        <InputLabel htmlFor="email">
+          Email
+        </InputLabel>
+
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          value={user.email}
+          onChange={onValueChange}
+          placeholder="Enter your email"
+        />
       </FormControl>
+
+      {/* Password */}
+
       <FormControl>
-        <InputLabel>Enter Email</InputLabel>
-        <Input onChange={(e)=>onValueChange(e)} name='email'  />
+        <InputLabel htmlFor="password">
+          Password
+        </InputLabel>
+
+        <Input
+          id="password"
+          name="password"
+          type="password"
+          value={user.password}
+          onChange={onValueChange}
+          placeholder="Enter password"
+        />
       </FormControl>
+
+      {/* Mobile */}
+
       <FormControl>
-        <InputLabel>Enter Mobilenumer</InputLabel>
-        <Input onChange={(e)=>onValueChange(e)} name='phonenumber'  />
+        <InputLabel htmlFor="mobile">
+          Mobile Number
+        </InputLabel>
+
+        <Input
+          id="mobile"
+          name="mobile"
+          type="tel"
+          value={user.mobile}
+          onChange={onValueChange}
+          placeholder="Enter mobile number"
+          inputProps={{ maxLength: 10 }}
+        />
       </FormControl>
+
+      {/* Button */}
+
       <FormControl>
-        <Button onClick={addUserdetails} variant="contained">Register</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={addUserdetails}
+        >
+          Register
+        </Button>
       </FormControl>
-      
+
     </Container>
-  )
+  );
 };
 
 export default Signin;

@@ -11,7 +11,8 @@ const Navbar=()=>{
         <AppBar position="static">
           <Toolbar>
             <Tabs to="/">Home</Tabs> 
-            <Tabs to="/signin">Sign-in</Tabs> 
+            <Tabs to="/login">Login</Tabs> 
+            <Tabs to="/register">Register</Tabs> 
             <Tabs to="/resulting">Result </Tabs>
             <Tabs to="/all">Alluser</Tabs>
             <Tabs to="/playquiz">Play-Quiz</Tabs>

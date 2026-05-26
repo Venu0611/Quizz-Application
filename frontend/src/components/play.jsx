@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
-import { Box, styled } from "@mui/material";
+import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import data from '../database/data.json';
+import { updateUser } from "./services/Api"; // Ensure your Api.js file exports an update function
 
 const QuizTabel = styled('div')({
   border: '1px solid black',
@@ -35,11 +36,11 @@ const QuizTabel = styled('div')({
   },
   'li.correct':{
     background:'green',
-    bordercolor:'darkgreen',
+    borderColor:'darkgreen',
   },
   'li.wrong':{
     background:'red',
-    bordercolor:'darkred',
+    borderColor:'darkred',
   }
 });
 
@@ -71,11 +72,32 @@ const Play = () => {
     }
   };
 
-  const next = () => {
+  const next = async () => {
     if (lock) {
       if (index === data.length - 1) {
-        // Navigate to Resulted component with score and total questions
-        navigate('/resulting', { state: { score: score, totalQuestions: data.length } });
+        // Calculate the final total score
+        const finalScore = score; 
+
+        try {
+          // Retrieve the logged-in user data from localStorage
+          const loggedInUser = JSON.parse(localStorage.getItem("user"));
+          
+          if (loggedInUser && loggedInUser.id) {
+            // Append the new score data to the existing user profile payload
+            const updatedProfile = { ...loggedInUser, score: finalScore };
+            
+            // Save to database via PUT http://localhost:9092/customer/{id}
+            await updateUser(loggedInUser.id, updatedProfile);
+            
+            // Update local storage tracking so it matches database state
+            localStorage.setItem("user", JSON.stringify(updatedProfile));
+          }
+        } catch (error) {
+          console.error("Failed to save user score to backend:", error);
+        }
+
+        // Navigate to results view
+        navigate('/resulting', { state: { score: finalScore, totalQuestions: data.length } });
       } else {
         setIndex(index + 1);
         setQuestion(data[index + 1]);

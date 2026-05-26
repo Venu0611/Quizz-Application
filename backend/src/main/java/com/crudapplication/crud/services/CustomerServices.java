@@ -29,7 +29,14 @@ public class CustomerServices {
         customer.setName(customerDTO.getName());
         customer.setEmail(customerDTO.getEmail());
         customer.setPhonenumber(customerDTO.getPhonenumber());
+        customer.setPassword(customerDTO.getPassword());
         return customerRepo.save(customer);
+    }
+
+    public Customer loginCustomer(String username, String password) {
+        return customerRepo.findByNameAndPassword(username, password)
+                .or(() -> customerRepo.findByEmailAndPassword(username, password))
+                .orElse(null);
     }
 
     
