@@ -1,24 +1,15 @@
 import axios from "axios";
 
-const API_URL = 'http://localhost:9092'; // Base URL for your Spring Boot application
+const API_URL = 'https://quizz-application-production.up.railway.app'; // Base URL for your Spring Boot application
 
 export const addUser = async (data) => {
   try {
+    // The Spring Boot controller's POST endpoint for creating a customer is "customer"
     const response = await axios.post(`${API_URL}/customer`, data);
     return response.data;
   } catch (error) {
     console.log("Error adding user", error.message);
     throw new Error("Could not add user. Please try again.");
-  }
-}
-
-export const loginUser = async (data) => {
-  try {
-    const response = await axios.post(`${API_URL}/login`, data);
-    return response.data;
-  } catch (error) {
-    console.log("Error logging in", error.message);
-    throw error;
   }
 }
 
@@ -67,3 +58,13 @@ export const updateUser = async (userId, data) => {
     throw new Error(`Could not update user with ID ${userId}. Please try again.`);
   }
 }
+export const loginUser = async (data) => {
+  try {
+    const response = await axios.post(`${API_URL}/login`, data);
+    return response.data; // <-- Return ONLY the data payload
+  } catch (error) {
+    console.error("Error logging in", error.message);
+    // Rethrow the actual server response error so your UI component's catch block can read it
+    throw error; 
+  }
+};
