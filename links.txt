@@ -1,0 +1,2 @@
+https://quizz-application-gold.vercel.app/register----------------fronted
+https://quizz-application-production.up.railway.app/--------------backend
