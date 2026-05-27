@@ -11,7 +11,7 @@ import com.backend.services.CustomerServices;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "https://quizz-application-gold.vercel.app/register", allowCredentials = "true")
+@CrossOrigin(origins = "https://quizz-application-gold.vercel.app", allowCredentials = "true")
 public class MainController {
 
     @Autowired
