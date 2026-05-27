@@ -11,7 +11,13 @@ import com.backend.services.CustomerServices;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "https://quizz-application-gold.vercel.app", allowCredentials = "true")
+//@CrossOrigin(origins = "https://quizz-application-gold.vercel.app", allowCredentials = "true")
+@CrossOrigin(
+    origins = "https://quizz-application-gold.vercel.app", 
+    allowCredentials = "true",
+    allowedHeaders = "*",
+    methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS}
+)
 public class MainController {
 
     @Autowired
