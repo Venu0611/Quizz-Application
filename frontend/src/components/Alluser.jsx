@@ -20,8 +20,17 @@ const Alluser = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await getUsers();
-        setUsers(response.data);
+        const dataPayload = await getUsers(); // Extracted response payload
+        
+        // If dataPayload is already the array, assign it directly. 
+        // If it's a fallback axios response container for some reason, use dataPayload.data.
+        if (Array.isArray(dataPayload)) {
+          setUsers(dataPayload);
+        } else if (dataPayload && dataPayload.data) {
+          setUsers(dataPayload.data);
+        } else {
+          setUsers([]); // Safe fallback to keep map from breaking
+        }
       } catch (error) {
         console.log("Error fetching users", error.message);
         setError("Failed to fetch users.");
@@ -55,7 +64,8 @@ const Alluser = () => {
           </TableRow>
         </StyledTableHead>
         <TableBody>
-          {users.map((user) => (
+          {/* Added short-circuit protection (users &&) to safeguard runtime map calls */}
+          {users && users.map((user) => (
             <TableRow key={user.id}>
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.name}</TableCell>
